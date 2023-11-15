@@ -1,7 +1,0 @@
-
-S	java:S106!"9Replace this use of System.out or System.err by a logger.(¨ÿ£ þÿÿÿÿ
-Q	java:S125#"<This block of commented-out lines of code should be removed.(ûŸÜè
-I
-java:S1128".Remove this unused import 'java.util.HashMap'.(™˜”€ùÿÿÿÿ
-E
-java:S1128"*Remove this unused import 'java.util.Map'.(¼è½Òþÿÿÿÿ
