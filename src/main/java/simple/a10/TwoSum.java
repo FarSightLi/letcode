@@ -22,6 +22,9 @@ package simple.a10;
 //        输入：nums = [3,3], target = 6
 //        输出：[0,1]
 
+import java.util.HashMap;
+import java.util.Map;
+
 //时间
 //
 //55ms
@@ -31,7 +34,7 @@ package simple.a10;
 //41.25MB
 //击败 96.18%使用 Java 的用户
 public class TwoSum {
-    public int[] twoSum(int[] nums, int target) {
+        public int[] twoSum0(int[] nums, int target) {
         int[] result = new int[2];
         for (int i = 0; i < nums.length; i++) {
             for (int j = i+1; j < nums.length; j++) {
@@ -44,6 +47,42 @@ public class TwoSum {
         }
         return result;
     }
+
+    /**
+     * 第二遍
+     * 时间4ms，63.10%，内存93.44
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int[] twoSum1(int[] nums, int target) {
+        Map<Integer, Integer> map = new HashMap<>(nums.length);
+        for (int i = 0; i < nums.length; i++) {
+            map.put(nums[i], i);
+        }
+        for (int i = 0; i < nums.length; i++) {
+            Integer t = map.get(target - nums[i]);
+            if (t != null) {
+                if (t.equals(nums[i])) {
+                    continue;
+                }
+                return new int[]{i, map.get(target - nums[i])};
+            }
+        }
+        return new int[0];
+    }
+
+    public int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> map = new HashMap<>(nums.length);
+        for (int i = 0; i < nums.length; i++) {
+            Integer p = map.get(target - nums[i]);
+            if (p != null){
+                return new int[]{p, i};
+            }
+            map.put(nums[i],i);
+        }
+        return new int[0];
+    }
 /// chatGPT
 //时间
 //
@@ -54,7 +93,7 @@ public class TwoSum {
 //41.42MB
 //击败 80.83%使用 Java 的用户
 
-//public int[] twoSum(int[] nums, int target) {
+    //public int[] twoSum(int[] nums, int target) {
 //    int[] result = new int[2];
 //        // 创建一个哈希表，用于存储数字和其下标的映射关系
 //        HashMap<Integer, Integer> numToIndex = new HashMap<>();
@@ -73,8 +112,8 @@ public class TwoSum {
 //    return result;
 //}
     public static void main(String[] args) {
-        int[] nums = {3,2,4};
+        int[] nums = {3, 2, 4};
         TwoSum twoSum = new TwoSum();
-        twoSum.twoSum(nums,6);
+        twoSum.twoSum(nums, 6);
     }
 }
