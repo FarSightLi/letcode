@@ -168,4 +168,34 @@ public class test {
     public void testIsPalindrome(){
         System.out.println(isPalindrome(-121));
     }
+
+    public String longestCommonPrefix(String[] strs) {
+        if (strs.length == 0) {
+            return "";
+        }
+        int shortest = strs[0].length();
+        for (int i = 1; i < strs.length; i++) {
+            int length = strs[i].length();
+            if (length < shortest) {
+                shortest = length;
+            }
+        }
+        StringBuilder prefix = new StringBuilder();
+        for (int i = 0; i < shortest; i++) {
+            String firstStr = strs[0];
+            char c = firstStr.charAt(i);
+            for (String str : strs) {
+                if (c != str.charAt(i)) {
+                    return prefix.toString();
+                }
+            }
+            prefix.append(c);
+        }
+        return prefix.toString();
+    }
+
+    @Test
+    public void testLongestCommonPrefix(){
+        String s = longestCommonPrefix(new String[]{"a","ab"});
+    }
 }

@@ -55,9 +55,41 @@ public class LongestCommonPrefix {
         return stringBuilder.toString();
     }
 
+    public String longestCommonPrefixByGPT(String[] strs) {
+        if (strs == null || strs.length == 0) return "";
+        return longestCommonPrefixHelper(strs, 0, strs.length - 1);
+    }
+
+    private String longestCommonPrefixHelper(String[] strs, int left, int right) {
+        // Base case: if the range is a single string
+        if (left == right) {
+            return strs[left];
+        }
+
+        // Split the array into halves
+        int mid = left + (right - left) / 2;
+
+        // Recursively find the longest common prefix in both halves
+        String leftPrefix = longestCommonPrefixHelper(strs, left, mid);
+        String rightPrefix = longestCommonPrefixHelper(strs, mid + 1, right);
+
+        // Merge the two prefixes
+        return commonPrefix(leftPrefix, rightPrefix);
+    }
+
+    private String commonPrefix(String left, String right) {
+        int minLength = Math.min(left.length(), right.length());
+        for (int i = 0; i < minLength; i++) {
+            if (left.charAt(i) != right.charAt(i)) {
+                return left.substring(0, i);
+            }
+        }
+        return left.substring(0, minLength); // One is a prefix of the other
+    }
+
 
     public static void main(String[] args) {
         String[] strings = {"flower", "flower", "flower", "flower"};
-        System.out.println(new LongestCommonPrefix().longestCommonPrefix(strings));
+        System.out.println(new LongestCommonPrefix().longestCommonPrefixByGPT(strings));
     }
 }
