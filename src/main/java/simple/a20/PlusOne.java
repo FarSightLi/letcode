@@ -55,4 +55,37 @@ public class PlusOne {
         return digits;
     }
 
+    /**
+     * 2024.10.26新解法，时间击败100%
+     */
+    class Solution {
+        public int[] plusOne(int[] digits) {
+            int carry = 0;
+            int lastNum = digits[digits.length - 1] + 1;
+            if (lastNum >= 10) {
+                lastNum = lastNum - 10;
+                carry = 1;
+            }
+            digits[digits.length - 1] = lastNum;
+            for (int i = digits.length - 2; i >= 0; i--) {
+                int r = digits[i] + carry;
+                if (r >= 10) {
+                    carry = 1;
+                    r = r - 10;
+                }else {
+                    carry = 0;
+                }
+                digits[i] = r;
+            }
+            if (carry > 0) {
+                int[] result = new int[digits.length + 1];
+                result[0] = carry;
+                System.arraycopy(digits, 0, result, 1, digits.length);
+                return result;
+            } else {
+                return digits;
+            }
+        }
+    }
+
 }
