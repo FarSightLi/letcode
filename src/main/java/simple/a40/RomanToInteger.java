@@ -1,6 +1,7 @@
 package simple.a40;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class RomanToInteger {
     static class Solution {
@@ -29,24 +30,23 @@ public class RomanToInteger {
             char[] array = s.toCharArray();
             int sum = 0;
             for (int i = 0; i < array.length - 1; i++) {
-                // adjust not out of index
-                // left less than right
                 Integer left = romanMap.get(array[i]);
                 Integer right = romanMap.get(array[i + 1]);
                 if (left < right) {
-                    sum += right - left;
-                    i++;
-                    continue;
+                    // left less than right, just decrement
+                    sum -= left;
+                }else {
+                    // else increment
+                    sum += left;
                 }
-                sum += left;
-                sum += romanMap.get(array[i]);
             }
-            return sum;
+            // last num must bigger than left, so just decrement
+            return sum + romanMap.get(array[array.length -1]);
         }
     }
 
     public static void main(String[] args) {
         Solution solution = new Solution();
-        solution.romanToInt("MCMXCIV");
+        System.out.println(solution.romanToInt("MCMXCIV"));
     }
 }

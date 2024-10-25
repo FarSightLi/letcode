@@ -62,6 +62,49 @@ public class AddBinary {
         return builder.toString();
     }
 
+    /**
+     * 2024.10.25新思路，使用位运算
+     * @param a
+     * @param b
+     * @return
+     */
+    public String addBinaryNew(String a, String b) {
+        // make a length is max
+        int dif = a.length() - b.length();
+        if (dif < 0) {
+            String t = "";
+            t = a;
+            a = b;
+            b = t;
+        }
+        // 补0
+        StringBuilder zero = new StringBuilder();
+        for (int i = 0; i < Math.abs(dif); i++) {
+            zero.append("0");
+        }
+        b = zero.append(b).toString();
+        char c = '0';
+        char[] result = new char[a.length() + 1];
+        int resultIndex = a.length();
+        for (int i = b.length() - 1; i >= 0; i--) {
+            char charA = a.charAt(i);
+            char charB = b.charAt(i);
+            char r = (charA ^ charB) == 0 ? '0' : '1';
+            r = (r ^ c) == 0 ? '0' : '1';
+            if ((charA == charB && charA == '1') || r == '0' && c == '1') {
+                c = '1';
+            }else {
+                c = '0';
+            }
+            result[resultIndex] = r;
+            resultIndex--;
+        }
+        if (c == '1') {
+            result[resultIndex] = c;
+            return String.valueOf(result,resultIndex,result.length);
+        }
+        return String.valueOf(result,1,result.length-1);
+    }
     public static void main(String[] args) {
 
     }

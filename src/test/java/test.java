@@ -132,7 +132,7 @@ public class test {
     public int removeDuplicates(int[] nums) {
         int count = 1;
         for (int i = 1; i < nums.length; i++) {
-            if (nums[i - 1] != nums[i]){
+            if (nums[i - 1] != nums[i]) {
                 nums[count] = nums[i];
                 count++;
             }
@@ -142,13 +142,13 @@ public class test {
 
     @Test
     public void testRemoveDuplicates() {
-        System.out.println(removeDuplicates(new int[]{1,1,1,2,2,3}));
+        System.out.println(removeDuplicates(new int[]{1, 1, 1, 2, 2, 3}));
     }
 
 
     public boolean isPalindrome(int x) {
         // 负数、不为0且结尾是0的不可能回文
-        if (x < 0 || (x!=0 && x%10==0)){
+        if (x < 0 || (x != 0 && x % 10 == 0)) {
             return false;
         }
         int result = 0;
@@ -159,13 +159,13 @@ public class test {
             int last = x % 10;
             result = result * 10 + last;
             // 去除x的最后一位
-            x = x /10;
+            x = x / 10;
         }
         return origin == result;
     }
 
     @Test
-    public void testIsPalindrome(){
+    public void testIsPalindrome() {
         System.out.println(isPalindrome(-121));
     }
 
@@ -195,7 +195,68 @@ public class test {
     }
 
     @Test
-    public void testLongestCommonPrefix(){
-        String s = longestCommonPrefix(new String[]{"a","ab"});
+    public void testLongestCommonPrefix() {
+        String s = longestCommonPrefix(new String[]{"a", "ab"});
+    }
+
+    public String addBinary(String a, String b) {
+        // make a length is max
+        int dif = a.length() - b.length();
+        if (dif < 0) {
+            String t = "";
+            t = a;
+            a = b;
+            b = t;
+        }
+        // 补0
+        StringBuilder zero = new StringBuilder();
+        for (int i = 0; i < Math.abs(dif); i++) {
+            zero.append("0");
+        }
+        b = zero.append(b).toString();
+        char c = '0';
+        char[] result = new char[a.length() + 1];
+        int resultIndex = a.length();
+        for (int i = b.length() - 1; i >= 0; i--) {
+            char charA = a.charAt(i);
+            char charB = b.charAt(i);
+            char r = (charA ^ charB) == 0 ? '0' : '1';
+            r = (r ^ c) == 0 ? '0' : '1';
+            if ((charA == charB && charA == '1') || r == '0' && c == '1') {
+                c = '1';
+            }else {
+                c = '0';
+            }
+            result[resultIndex] = r;
+            resultIndex--;
+        }
+        if (c == '1') {
+            result[resultIndex] = c;
+            return String.valueOf(result,resultIndex,result.length);
+        }
+        return String.valueOf(result,1,result.length-1);
+    }
+
+    @Test
+    public void testAddBinary() {
+        System.out.println(addBinary("1", "111"));
+    }
+
+
+    @Test
+    public void testwei() {
+        System.out.println((char) ('1' ^ '1') == '0');
+        System.out.println('1' ^ '0');
+        System.out.println('0' ^ '0');
+        System.out.println("**********");
+        System.out.println('1' | '1');
+        System.out.println('1' | '1');
+        System.out.println('1' | '0');
+        System.out.println("**********");
+        System.out.println('1' & '0');
+        System.out.println('0' & '0');
+        System.out.println('0' & '0');
+        System.out.println();
+        System.out.println('0' + '0');
     }
 }
