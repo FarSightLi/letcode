@@ -43,11 +43,11 @@ public class ThreeSum {
                     while (i < length - 2 && nums[i+1] + nums[left] + nums[right] ==0 && nums[i] == nums[i+1]){
                         i++;
                     }
-                    // 左指针右移，直到左指针所值的是独特的数字
+                    // 左指针右移，直到右移后左指针所值的是独特的数字
                     while (left + 1 < length && nums[left] == nums[left+1]) {
                         left++;
                     }
-                    // 右指针左移，直到右指针所值的是独特的数字
+                    // 右指针左移，直到右指针左移后所值的是独特的数字
                     while (right -1 > 0 && nums[right] == nums[right-1]){
                         right--;
                     }
