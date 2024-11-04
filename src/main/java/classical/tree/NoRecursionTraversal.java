@@ -20,7 +20,6 @@ public class NoRecursionTraversal {
             return result;
         }
         Stack<TreeNode> stack = new Stack<>();
-        stack.push(root);
         TreeNode p = root;
         while (p != null || !stack.empty()) {
             while (p != null) {
@@ -31,6 +30,15 @@ public class NoRecursionTraversal {
             result.add(pop.val);
             p = pop.right;
         }
+        return result;
+    }
+
+    public List<Integer> preorder(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+        Stack<TreeNode> stack = new Stack<>();
         return result;
     }
 
