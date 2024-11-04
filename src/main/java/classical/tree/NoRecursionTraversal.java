@@ -20,22 +20,15 @@ public class NoRecursionTraversal {
             return result;
         }
         Stack<TreeNode> stack = new Stack<>();
-        stack.push(root);
         TreeNode p = root;
-        while (!stack.empty()) {
-            System.out.println(p.val);
-            if (p.left != null) {
-                stack.push(p.left);
+        while (p!=null || !stack.empty()) {
+            while (p != null) {
+                stack.push(p);
                 p = p.left;
-                continue;
             }
-            result.add(stack.pop().val);
-            if (p.right != null) {
-                stack.push(p.right);
-                p = p.right;
-                continue;
-            }
-            p = stack.peek();
+            TreeNode pop = stack.pop();
+            result.add(pop.val);
+            p = pop.right;
         }
         return result;
     }
