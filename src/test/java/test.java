@@ -273,7 +273,7 @@ public class test {
             if (r >= 10) {
                 carry = 1;
                 r = r - 10;
-            }else {
+            } else {
                 carry = 0;
             }
             digits[i] = r;
@@ -290,6 +290,61 @@ public class test {
 
     @Test
     public void testPlusOne() {
-        System.out.println(Arrays.toString(plusOne(new int[]{9,9,9})));
+        System.out.println(Arrays.toString(plusOne(new int[]{9, 9, 9})));
+    }
+
+    /**
+     * 中序遍历
+     *
+     * @param root
+     * @return
+     */
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+        return revisionInorderTraversal(root);
+    }
+
+    private List<Integer> revisionInorderTraversal(TreeNode treeNode) {
+        List<Integer> left = new ArrayList<>();
+        if (treeNode.left != null) {
+            left = revisionInorderTraversal(treeNode.left);
+        }
+        List<Integer> right = new ArrayList<>();
+        if (treeNode.right != null) {
+            right = revisionInorderTraversal(treeNode.right);
+        }
+        List<Integer> result = new ArrayList<>(left);
+        result.add(treeNode.val);
+        result.addAll(right);
+        return result;
+    }
+
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        if (p == q && p == null) {
+            return true;
+        }else {
+            if (p == null || q == null) {
+                return false;
+            }
+        }
+        if (p.val != q.val) {
+            return false;
+        }
+        return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+    }
+
+    public boolean revisionsIsSameTree(TreeNode p, TreeNode q) {
+        if (p != q) {
+            return false;
+        } else {
+            // one of them is null ,return false
+            if (q == null) {
+                return false;
+            }
+        }
+        return revisionsIsSameTree(p.left, q.left) && revisionsIsSameTree(q.right, q.right);
     }
 }
