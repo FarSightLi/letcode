@@ -2,10 +2,7 @@ package classical.tree;
 
 import common.TreeNode;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * 非递归遍历树
@@ -93,12 +90,36 @@ public class NoRecursionTraversal {
         return result;
     }
 
+    /**
+     * 广度优先遍历
+     * @return
+     */
+    public List<Integer> bfs(TreeNode root){
+        List<Integer> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            TreeNode poll = queue.poll();
+            if (poll == null) {
+                continue;
+            }
+            result.add(poll.val);
+            queue.offer(poll.left);
+            queue.offer(poll.right);
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
         NoRecursionTraversal noRecursionTraversal = new NoRecursionTraversal();
         List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, null, 8, null, null, 6, 7, 9);
         TreeNode root = TreeNode.listToBinaryTree(list);
 //        System.out.println(noRecursionTraversal.inorder(root));
 //        System.out.println(noRecursionTraversal.preorder(root));
-        System.out.println(noRecursionTraversal.postorder(root));
+//        System.out.println(noRecursionTraversal.postorder(root));
+        System.out.println(noRecursionTraversal.bfs(root));
     }
 }
