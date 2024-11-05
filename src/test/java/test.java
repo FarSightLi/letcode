@@ -1,3 +1,4 @@
+import common.TreeNode;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
@@ -30,16 +31,6 @@ public class test {
         System.out.println(20 / 6 + 1);
     }
 
-
-    class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-
-        TreeNode(int val) {
-            this.val = val;
-        }
-    }
 
     private void flatten(TreeNode root) {
         if (root == null) {
@@ -346,5 +337,35 @@ public class test {
             }
         }
         return revisionsIsSameTree(p.left, q.left) && revisionsIsSameTree(q.right, q.right);
+    }
+
+    /**
+     * 是否对称
+     * @param root
+     * @return
+     */
+    public boolean isSymmetric(TreeNode root) {
+        return recursionSymmetric(root.left,root.right);
+    }
+
+    public boolean recursionSymmetric(TreeNode p, TreeNode q) {
+        if (p != null && q != null) {
+            if (p.val != q.val) {
+                return false;
+            } else {
+                return recursionSymmetric(p.left, q.right) && recursionSymmetric(p.right, q.left);
+            }
+        } else if (p == null && q == null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Test
+    void testIsSymmetric(){
+        List<Integer> list = Arrays.asList(2,3,3,4,5,null,4);
+        TreeNode root = TreeNode.listToBinaryTree(list);
+        System.out.println(isSymmetric(root));
     }
 }
