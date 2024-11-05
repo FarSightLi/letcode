@@ -368,4 +368,13 @@ public class test {
         TreeNode root = TreeNode.listToBinaryTree(list);
         System.out.println(isSymmetric(root));
     }
+
+    public int maxDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int leftDepth = maxDepth(root.left);
+        int rightDepth = maxDepth(root.right);
+        return Math.max(leftDepth,rightDepth)+1;
+    }
 }
