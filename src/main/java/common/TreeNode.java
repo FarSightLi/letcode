@@ -1,9 +1,7 @@
 package common;
 
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class TreeNode {
     public int val;
@@ -80,18 +78,32 @@ public class TreeNode {
         if (list == null || list.isEmpty() || list.get(0) == null) {
             return null; // 空列表或第一个元素为 null 返回空树
         }
-        return buildTree(list, 0);
-    }
 
-    // 辅助递归方法：构建树节点
-    private static TreeNode buildTree(List<Integer> list, int index) {
-        if (index >= list.size() || list.get(index) == null) {
-            return null; // 超出列表边界或元素为 null 时返回 null
+        TreeNode root = new TreeNode(list.get(0));
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        int i = 1; // 从列表的第二个元素开始
+
+        while (i < list.size()) {
+            TreeNode current = queue.poll();
+            if (current != null) {
+                // 左子节点
+                if (i < list.size() && list.get(i) != null) {
+                    current.left = new TreeNode(list.get(i));
+                    queue.offer(current.left);
+                }
+                i++;
+
+                // 右子节点
+                if (i < list.size() && list.get(i) != null) {
+                    current.right = new TreeNode(list.get(i));
+                    queue.offer(current.right);
+                }
+                i++;
+            }
         }
-        TreeNode node = new TreeNode(list.get(index));
-        node.left = buildTree(list, 2 * index + 1); // 左子节点位置：2 * index + 1
-        node.right = buildTree(list, 2 * index + 2); // 右子节点位置：2 * index + 2
-        return node;
+
+        return root;
     }
 
 }
