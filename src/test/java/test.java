@@ -316,7 +316,7 @@ public class test {
     public boolean isSameTree(TreeNode p, TreeNode q) {
         if (p == q && p == null) {
             return true;
-        }else {
+        } else {
             if (p == null || q == null) {
                 return false;
             }
@@ -341,11 +341,12 @@ public class test {
 
     /**
      * 是否对称
+     *
      * @param root
      * @return
      */
     public boolean isSymmetric(TreeNode root) {
-        return recursionSymmetric(root.left,root.right);
+        return recursionSymmetric(root.left, root.right);
     }
 
     public boolean recursionSymmetric(TreeNode p, TreeNode q) {
@@ -363,8 +364,8 @@ public class test {
     }
 
     @Test
-    void testIsSymmetric(){
-        List<Integer> list = Arrays.asList(2,3,3,4,5,null,4);
+    void testIsSymmetric() {
+        List<Integer> list = Arrays.asList(2, 3, 3, 4, 5, null, 4);
         TreeNode root = TreeNode.listToBinaryTree(list);
         System.out.println(isSymmetric(root));
     }
@@ -375,6 +376,37 @@ public class test {
         }
         int leftDepth = maxDepth(root.left);
         int rightDepth = maxDepth(root.right);
-        return Math.max(leftDepth,rightDepth)+1;
+        return Math.max(leftDepth, rightDepth) + 1;
+    }
+
+    static HashMap<Integer, Integer> map = new HashMap<>();
+
+    static {
+        map.put(1, 1);
+        map.put(2, 2);
+    }
+
+    /**
+     * 现在知道1和2，那么3无非就是先走一步，然后剩下的就是走两步的情况，则这时的结果r= v2 再加上 先走两步，剩下的就是走一步的情况:r=v1, 总结果 v1+v2;
+     * 4则是先走1步，那么就是v3 和先走两步的v2 则结果等于v3+v2
+     *
+     * @param n
+     * @return
+     */
+    public int climbStairs(int n) {
+        Integer r = map.get(n);
+        if (r== null) {
+            int i = climbStairs(n - 2);
+            map.put(n-2,i);
+            int j = climbStairs(n - 1);
+            map.put(n-1,j);
+            r = i+j;
+        }
+        return r;
+    }
+
+    @Test
+    public void testClimbStairs() {
+        System.out.println(climbStairs(45));
     }
 }
