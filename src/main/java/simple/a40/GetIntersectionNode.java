@@ -36,6 +36,45 @@ public class GetIntersectionNode {
         return a;
     }
 
+    /**
+     * 过了几天，重新用排名第一思路解题
+     * @param headA
+     * @param headB
+     * @return
+     */
+    public ListNode getIntersectionNodeNew(ListNode headA, ListNode headB) {
+        int aLen = 1;
+        int bLen = 1;
+        ListNode countNodeA = headA;
+        ListNode countNodeB = headB;
+        while (countNodeA.next != null) {
+            aLen++;
+            countNodeA = countNodeA.next;
+        }
+        while (countNodeB.next != null) {
+            bLen++;
+            countNodeB = countNodeB.next;
+        }
+        ListNode newHeadA = headA;
+        ListNode newHeadB = headB;
+        while (aLen > bLen) {
+            newHeadA = newHeadA.next;
+            aLen--;
+        }
+        while (bLen > aLen) {
+            newHeadB = newHeadB.next;
+            bLen--;
+        }
+        while (newHeadA != null && newHeadB != null) {
+            if (newHeadA == newHeadB) {
+                return newHeadA;
+            }
+            newHeadA = newHeadA.next;
+            newHeadB = newHeadB.next;
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         ListNode listNode1 = ListNode.buildList(new int[]{4, 1 ,2});
         ListNode listNode2 = ListNode.buildList(new int[]{5,6});
