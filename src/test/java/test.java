@@ -1,5 +1,6 @@
 import common.TreeNode;
 import org.junit.jupiter.api.Test;
+import simple.a40.CountNodes;
 
 import java.util.*;
 
@@ -395,12 +396,12 @@ public class test {
      */
     public int climbStairs(int n) {
         Integer r = map.get(n);
-        if (r== null) {
+        if (r == null) {
             int i = climbStairs(n - 2);
-            map.put(n-2,i);
+            map.put(n - 2, i);
             int j = climbStairs(n - 1);
-            map.put(n-1,j);
-            r = i+j;
+            map.put(n - 1, j);
+            r = i + j;
         }
         return r;
     }
@@ -408,5 +409,71 @@ public class test {
     @Test
     public void testClimbStairs() {
         System.out.println(climbStairs(45));
+    }
+
+
+    public int maxDepth1(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        return getDepth(root, 1);
+    }
+
+    public int getDepth(TreeNode root, int depth) {
+        if (root == null) {
+            return depth - 1;
+        }
+        if (root.left == null && root.right == null) {
+            return depth;
+        }
+        return Math.max(getDepth(root.left, depth + 1), getDepth(root.right, depth + 1));
+    }
+
+    @Test
+    public void testDep() {
+        TreeNode root = new TreeNode(1);
+        root.right = new TreeNode(2);
+        System.out.println(maxDepth1(root));
+        System.out.println(maxDepth(root));
+    }
+
+    public int countNodes(TreeNode root){
+        if (root == null) {
+            return 0;
+        }
+        int leftHeight = getLeftHeight(root.left);
+        int rightHeight = getLeftHeight(root.right);
+        if (leftHeight == rightHeight) {
+            // 根的左右高度相等，则只需计算右树，
+            // return 左全子树+根节点 + 右子树
+            return (1<<leftHeight) + countNodes(root.right);
+        } else {
+            // 右子树高度小于左子树，则既要统计左，也要统计右，再加上根节点
+            return countNodes(root.left) + countNodes(root.right) +1 ;
+        }
+    }
+
+    /**
+     * 统计左数的高度
+     * @param treeNode
+     * @return
+     */
+    int getLeftHeight(TreeNode treeNode){
+        if (treeNode == null) {
+            return 0;
+        }
+        return 1+getLeftHeight(treeNode.left);
+    }
+
+    @Test
+    public void testCountNode(){
+        TreeNode treeNode = new TreeNode(1);
+        treeNode.left = new TreeNode(2);
+        treeNode.right = new TreeNode(3);
+        treeNode.right.left = new TreeNode(60);
+        treeNode.left.left = new TreeNode(4);
+        treeNode.left.right = new TreeNode(5);
+        System.out.println(countNodes(treeNode));
+
     }
 }
