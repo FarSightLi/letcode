@@ -395,12 +395,12 @@ public class test {
      */
     public int climbStairs(int n) {
         Integer r = map.get(n);
-        if (r== null) {
+        if (r == null) {
             int i = climbStairs(n - 2);
-            map.put(n-2,i);
+            map.put(n - 2, i);
             int j = climbStairs(n - 1);
-            map.put(n-1,j);
-            r = i+j;
+            map.put(n - 1, j);
+            r = i + j;
         }
         return r;
     }
@@ -408,5 +408,25 @@ public class test {
     @Test
     public void testClimbStairs() {
         System.out.println(climbStairs(45));
+    }
+
+    public TreeNode invertTree(TreeNode root) {
+        if (root == null || (root.right == null && root.left == null)) {
+            return root;
+        } else {
+            TreeNode tmp = root.left;
+            root.left = root.right;
+            invertTree(root.left);
+            root.right = tmp;
+            invertTree(root.right);
+        }
+        return root;
+    }
+
+    @Test
+    void testInvertTree(){
+        TreeNode treeNode = TreeNode.listToBinaryTree(List.of(1, 2, 3, 4, 6, 7, 9));
+        TreeNode result = invertTree(treeNode);
+        System.out.println(result);
     }
 }
