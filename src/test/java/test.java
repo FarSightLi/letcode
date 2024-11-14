@@ -496,4 +496,12 @@ public class test {
         TreeNode result = invertTree(treeNode);
         System.out.println(result);
     }
+
+
+    public boolean isValidBST(TreeNode root) {
+        if (root.left == null || root.left.val < root.val) {
+            return true;
+        }
+        return true;
+    }
 }
