@@ -2,35 +2,41 @@ package middle.a20;
 
 import common.TreeNode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UniqueBinarySearchTree2 {
     public List<TreeNode> generateTrees(int n) {
-        for (int i = 1; i < n; i++) {
-            // 以i为根
-            TreeNode treeNode = new TreeNode(i);
-            // 构建左树
-            int left = i - 1;
-            // 从比i小的数字中挑选一个作为第一个左节点
-            for (int j = 1; j < left; j++) {
-
-            }
-        }
-        return null;
+        return recursion(1, n);
     }
 
-    public TreeNode recursion(int n) {
-        for (int i = 1; i < n; i++) {
-            int left = i - 1;
-            int right = i + 1;
-            while (left > 0 || right <= n) {
-                TreeNode treeNode = new TreeNode(i);
-                treeNode.left = recursion(left);
-                treeNode.right = recursion(right);
-                left--;
-                right++;
+    public List<TreeNode> recursion(int start, int end) {
+        List<TreeNode> result = new ArrayList<>();
+        if (start > end) {
+            result.add(null);
+            return result;
+        }
+        if (start == end) {
+            result.add(new TreeNode(start));
+            return result;
+        }
+        for (int i = start; i <= end; i++) {
+            List<TreeNode> leftList = recursion(start, i - 1);
+            List<TreeNode> rightList = recursion(i + 1, end);
+            for (TreeNode leftNode : leftList) {
+                for (TreeNode rightNode : rightList) {
+                    TreeNode root = new TreeNode(i);
+                    root.left = leftNode;
+                    root.right = rightNode;
+                    result.add(root);
+                }
             }
         }
-        return null;
+        return result;
+    }
+
+    public static void main(String[] args) {
+        List<TreeNode> treeNodes = new UniqueBinarySearchTree2().generateTrees(3);
+        System.out.println(treeNodes);
     }
 }
