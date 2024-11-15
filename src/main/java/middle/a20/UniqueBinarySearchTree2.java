@@ -36,7 +36,7 @@ public class UniqueBinarySearchTree2 {
     }
 
     public static void main(String[] args) {
-        List<TreeNode> treeNodes = new UniqueBinarySearchTree2().generateTrees(3);
+        List<TreeNode> treeNodes = new UniqueBinarySearchTree2().generateTrees(4);
         System.out.println(treeNodes);
     }
 }
