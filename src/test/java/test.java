@@ -1,6 +1,5 @@
 import common.TreeNode;
 import org.junit.jupiter.api.Test;
-import simple.a40.CountNodes;
 
 import java.util.*;
 
@@ -437,7 +436,7 @@ public class test {
         System.out.println(maxDepth(root));
     }
 
-    public int countNodes(TreeNode root){
+    public int countNodes(TreeNode root) {
         if (root == null) {
             return 0;
         }
@@ -446,27 +445,28 @@ public class test {
         if (leftHeight == rightHeight) {
             // 根的左右高度相等，则只需计算右树，
             // return 左全子树+根节点 + 右子树
-            return (1<<leftHeight) + countNodes(root.right);
+            return (1 << leftHeight) + countNodes(root.right);
         } else {
             // 右子树高度小于左子树，则既要统计左，也要统计右，再加上根节点
-            return countNodes(root.left) + countNodes(root.right) +1 ;
+            return countNodes(root.left) + countNodes(root.right) + 1;
         }
     }
 
     /**
      * 统计左数的高度
+     *
      * @param treeNode
      * @return
      */
-    int getLeftHeight(TreeNode treeNode){
+    int getLeftHeight(TreeNode treeNode) {
         if (treeNode == null) {
             return 0;
         }
-        return 1+getLeftHeight(treeNode.left);
+        return 1 + getLeftHeight(treeNode.left);
     }
 
     @Test
-    public void testCountNode(){
+    public void testCountNode() {
         TreeNode treeNode = new TreeNode(1);
         treeNode.left = new TreeNode(2);
         treeNode.right = new TreeNode(3);
@@ -475,6 +475,19 @@ public class test {
         treeNode.left.right = new TreeNode(5);
         System.out.println(countNodes(treeNode));
 
+    }
+
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+//        if (root == null) {
+//            return false;
+//        }
+//        ArrayDeque<TreeNode> deque = new ArrayDeque<>();
+//        deque.add(root);
+//        int result = root.val;
+//        while (!deque.isEmpty()) {
+//            if ()
+//        }
+        return false;
     }
 
     public TreeNode invertTree(TreeNode root) {
@@ -491,7 +504,7 @@ public class test {
     }
 
     @Test
-    void testInvertTree(){
+    void testInvertTree() {
         TreeNode treeNode = TreeNode.listToBinaryTree(List.of(1, 2, 3, 4, 6, 7, 9));
         TreeNode result = invertTree(treeNode);
         System.out.println(result);
@@ -499,9 +512,23 @@ public class test {
 
 
     public boolean isValidBST(TreeNode root) {
-        if (root.left == null || root.left.val < root.val) {
+        if (root == null) {
             return true;
         }
-        return true;
+        if (root.left == null && root.right == null) {
+            return true;
+        }
+        boolean flag;
+        if (root.right != null && root.right.val <= root.val) {
+            return false;
+        } else {
+            flag = isValidBST(root.right);
+        }
+        if (root.left != null && root.left.val >= root.val) {
+            return false;
+        } else {
+            flag = flag && isValidBST(root.left);
+        }
+        return flag;
     }
 }
