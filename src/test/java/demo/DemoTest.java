@@ -1,9 +1,11 @@
+package demo;
+
 import common.TreeNode;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
-public class test {
+public class DemoTest {
     @Test
     public void test1() {
         class Solution {
