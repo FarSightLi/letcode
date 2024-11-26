@@ -513,24 +513,25 @@ public class DemoTest {
     }
 
 
+    TreeNode pre = null;
+
     public boolean isValidBST(TreeNode root) {
         if (root == null) {
             return true;
         }
-        if (root.left == null && root.right == null) {
-            return true;
-        }
-        boolean flag;
-        if (root.right != null && root.right.val <= root.val) {
+        if (!isValidBST(root.left)) {
             return false;
-        } else {
-            flag = isValidBST(root.right);
         }
-        if (root.left != null && root.left.val >= root.val) {
+        if (pre != null && root.val <= pre.val) {
             return false;
-        } else {
-            flag = flag && isValidBST(root.left);
         }
-        return flag;
+        pre = root;
+        return isValidBST(root.right);
+    }
+
+    @Test
+    void testValidBst(){
+        TreeNode treeNode = TreeNode.listToBinaryTree(Arrays.asList(2, 1, 4, null, null, 3, 6));
+        isValidBST(treeNode);
     }
 }
