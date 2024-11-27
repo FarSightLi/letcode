@@ -6,15 +6,13 @@ public class DefuseTheBomb {
         int length = code.length;
         for (int i = 0; i < code.length; i++) {
             int target = 0;
-            if (k == 0) {
-                target = 0;
-            } else if (k < 0) {
+            if (k < 0) {
                 // replace the ith number with the sum of the previous k numbers.
                 for (int j = i - 1; j > i - 1 + k; j--) {
                     int index = (length + j) % length;
                     target += code[index];
                 }
-            } else {
+            } else if (k > 0) {
                 for (int j = i + 1; j < i + 1 + k; j++) {
                     int index = j % length;
                     target += code[index];
