@@ -67,7 +67,42 @@ public class HasPathSum {
         return checkSum(node.left, sum, targetSum) || checkSum(node.right, sum, targetSum);
     }
 
+    public boolean hasPathSumWithStack(TreeNode root, int targetSum) {
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        int sum = 0;
+        if (root == null) {
+            return false;
+        }
+        TreeNode last = null;
+        while (root != null || !stack.isEmpty()) {
+            while (root != null) {
+                stack.push(root);
+                sum += root.val;
+                root = root.left;
+            }
+            root = stack.peek();
+            TreeNode right = root.right;
+            if (right == null) {
+                if (sum == targetSum) {
+                    return true;
+                }
+            }else {
+                if (last != right) {
+                    root= right;
+                    sum += root.val;
+                    last = root;
+                }else {
+                    TreeNode pop = stack.pop();
+                    sum -= pop.val;
+                    last = root;
+                }
+            }
+            System.out.println(sum);
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
-        System.out.println(new HasPathSum().hasPathSum(TreeNode.listToBinaryTree(Arrays.asList(5, 4, 8, 11, null, 13, 4, 7, 2, null, null, null, 1)), 18));
+        System.out.println(new HasPathSum().hasPathSumWithStack(TreeNode.listToBinaryTree(Arrays.asList(5, 4, 8, 11, null, 13, 4, 7, 2, null, null, null, 1)), 18));
     }
 }
