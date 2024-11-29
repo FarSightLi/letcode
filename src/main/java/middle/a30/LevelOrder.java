@@ -22,26 +22,23 @@ public class LevelOrder {
 
     private void traversal(TreeNode root, int h) {
         if (root.left != null) {
-            if (result.size() - 1 < h) {
-                List<Integer> list = new ArrayList<>();
-                list.add(root.left.val);
-                result.add(list);
-            } else {
-                List<Integer> list = result.get(h);
-                list.add(root.left.val);
-            }
+            addResult(root.left, h);
             traversal(root.left, h + 1);
         }
         if (root.right != null) {
-            if (result.size() - 1 < h) {
-                List<Integer> list = new ArrayList<>();
-                list.add(root.right.val);
-                result.add(list);
-            } else {
-                List<Integer> list = result.get(h);
-                list.add(root.right.val);
-            }
+            addResult(root.right, h);
             traversal(root.right, h + 1);
+        }
+    }
+
+    private void addResult(TreeNode node, int h){
+        if (result.size() - 1 < h) {
+            List<Integer> list = new ArrayList<>();
+            list.add(node.val);
+            result.add(list);
+        } else {
+            List<Integer> list = result.get(h);
+            list.add(node.val);
         }
     }
 
