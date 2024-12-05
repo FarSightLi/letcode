@@ -8,50 +8,56 @@ import java.util.List;
 
 public class ZigzagLevelOrder {
     List<List<Integer>> result = new ArrayList<>();
-
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
         if (root == null) {
             return result;
         }
-        List<Integer> list = new ArrayList<>();
+        List<Integer> list = new ArrayList<>(1);
         list.add(root.val);
         result.add(list);
-        recursion(root, 2);
+        traversal(root, 1);
         return result;
     }
 
-    private void recursion(TreeNode treeNode, int high) {
-        if (treeNode == null) {
+    private void traversal(TreeNode root, int h){
+        if (root == null) {
             return;
         }
-        TreeNode right = treeNode.right;
-        TreeNode left = treeNode.left;
-        if (left != null) {
-            addNode(left, high);
+        if (root.left != null || root.right != null) {
+            // 偶数层高，先left
+            if (h % 2 == 0) {
+                addResult(root.left,h);
+                addResult(root.right,h);
+                traversal(root.left,h+1);
+                traversal(root.right,h+1);
+            }else {
+                addResult(root.right,h);
+                addResult(root.left,h);
+                traversal(root.right,h+1);
+                traversal(root.left,h+1);
+
+            }
         }
-        if (right != null) {
-            addNode(right, high);
-        }
-        recursion(left, high + 1);
-        recursion(right, high + 1);
     }
 
-    private void addNode(TreeNode treeNode, int high) {
+    private void addResult(TreeNode node, int h){
+        if (node == null) {
+            return;
+        }
         List<Integer> list;
-        if (result.size() < high) {
+        if (result.size() - 1< h) {
             list = new ArrayList<>();
-            result.add(list);
-        } else {
-            list = result.get(high - 1);
+        }else {
+            list = result.get(h);
         }
-        if (high % 2 == 0) {
-            list.add(0, treeNode.val);
-        } else {
-            list.add(treeNode.val);
-        }
+        list.add(node.val);
+        result.add(list);
     }
 
     public static void main(String[] args) {
-        System.out.println(new ZigzagLevelOrder().zigzagLevelOrder(TreeNode.listToBinaryTree(Arrays.asList(0,2,4,1,null,3,-1,5,1,null,6,null,8))));
+        TreeNode treeNode = TreeNode.listToBinaryTree(Arrays.asList(3, 9, 20, null, null, 15, 7));
+        ZigzagLevelOrder levelOrder = new ZigzagLevelOrder();
+        levelOrder.zigzagLevelOrder(treeNode);
+        System.out.println(levelOrder.result);
     }
 }
