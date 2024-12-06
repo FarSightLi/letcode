@@ -534,4 +534,23 @@ public class DemoTest {
         TreeNode treeNode = TreeNode.listToBinaryTree(Arrays.asList(2, 1, 4, null, null, 3, 6));
         isValidBST(treeNode);
     }
+
+    public boolean hasPathSum1(TreeNode root, int targetSum) {
+        return hasSumHelper(root,0,targetSum);
+    }
+    public boolean hasSumHelper(TreeNode root, int sum, int target){
+        if (root == null) {
+            return false;
+        }
+        sum = sum + root.val;
+        if (root.left == null && root.right == null){
+            return sum == target;
+        }
+        return hasSumHelper(root.left, sum, target) || hasSumHelper(root.right, sum, target);
+    }
+    @Test
+    void testHasSum(){
+        TreeNode node = TreeNode.listToBinaryTree(Arrays.asList(5, 4, 8, 11, null, 13, 4, 7, 2, null, null, null, 1));
+        System.out.println(hasPathSum1(node, 22));
+    }
 }
