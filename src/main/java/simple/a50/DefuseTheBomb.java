@@ -1,7 +1,7 @@
 package simple.a50;
 
 public class DefuseTheBomb {
-    public int[] decrypt(int[] code, int k) {
+    public int[] decryptOld(int[] code, int k) {
         int[] result = new int[code.length];
         int length = code.length;
         for (int i = 0; i < code.length; i++) {
@@ -20,6 +20,13 @@ public class DefuseTheBomb {
             }
             result[i] = target;
         }
+        return result;
+    }
+
+    public int[] decrypt(int[] code, int k) {
+        int[] result = new int[code.length];
+        int[] temp = new int[(code.length* 2) -1];
+
         return result;
     }
 
