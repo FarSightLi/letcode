@@ -6,6 +6,8 @@ import common.TreeNode;
 public class SortedListToBST {
     public TreeNode sortedListToBST(ListNode head) {
         if (head == null) return null;
+        // 提前结束，且简化后续判断
+        if (head.next == null) return new TreeNode(head.val);
         ListNode slowPre = head;
         ListNode slow = head;
         ListNode fast = head;
@@ -16,6 +18,7 @@ public class SortedListToBST {
             }
             slow = slow.next;
         }
+        // 这个逻辑被if (head.next == null) return new TreeNode(head.val);替换
         // the list length is 2, solo make slow step 1
         if (slow == slowPre && slow.next != null) {
             slow = slow.next;
