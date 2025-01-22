@@ -32,17 +32,14 @@ public class ConnectTree {
             if (root == null) {
                 return null;
             }
-            ArrayDeque<Node> deque = new ArrayDeque<>();
-            deque.push(root);
-            while (!deque.isEmpty()) {
-                Node poll = deque.poll();
-                if (poll == null) {
-                    continue;
-                }
-
-                deque.offer(poll.left);
-                deque.offer(poll.right);
+            if (root.left != null) {
+                root.left.next = root.right;
             }
+            if (root.right != null && root.next != null) {
+                root.right.next = root.next.left;
+            }
+            connect(root.left);
+            connect(root.right);
             return root;
         }
     }
